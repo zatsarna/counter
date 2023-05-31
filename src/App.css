@@ -14,11 +14,13 @@
     gap: 20px;
 
 }
-.values input {
+input {
     border: 3px solid lightskyblue;
     border-radius: 5px;
     padding: 5px 10px;
     width: 150px;
+    text-align: center;
+    outline: none;
 }
 .counter {
     width: 350px;
@@ -41,13 +43,23 @@
     text-align: center;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 20px;
+}
+.warningFont {
+    font-size: 20px;
 }
 .number {
     color: lightskyblue;
 }
 .red {
     color: red;
+}
+.redInput {
+    border: 3px solid red;
+    outline: none;
+    background-color: lightpink;
 }
 .controls {
     border: 3px solid lightskyblue;

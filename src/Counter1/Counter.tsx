@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import Button from './components/Button';
+import Button from '../components/Button';
 
 type CounterPropsType = {
     maxValue: number
@@ -23,7 +23,14 @@ const [number, setNumber]=useState<number>(props.startValue)
             setWarning("Incorrect value")
         }
 
-    },[props.startValue, props.maxValue])
+    },[props.startValue, props.maxValue, props.activeSettingsDisplay])
+    useEffect(()=>{
+        let startValueLS = localStorage.getItem('startValue')
+        if (startValueLS) {
+            setNumber(JSON.parse(startValueLS))
+        }
+
+    },[])
     function incHandler() {
         if (number<props.maxValue){
             setNumber(number+1)
@@ -36,11 +43,11 @@ const [number, setNumber]=useState<number>(props.startValue)
             <div className={'counter'}>
 
                 <div className={'display'}>
-                    <span>
+                    <div>
                         {props.activeSettingsDisplay ?
-                            <span className={props.startValue > props.maxValue || props.startValue <0 || props.maxValue <1 || props.startValue===props.maxValue ? 'red' : ''}>{warning}</span> :
+                            <span className={props.startValue > props.maxValue || props.startValue <0 || props.maxValue <1 || props.startValue===props.maxValue ? 'red warningFont' : 'warningFont'}>{warning}</span> :
                             <span className={number===props.maxValue ? 'red':'number'}>{number}</span>}
-                    </span>
+                    </div>
                 </div>
 
                 <div className={'controls'}>
