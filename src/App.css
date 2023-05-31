@@ -1,5 +1,79 @@
 .App {
-    margin: 20px auto;
-    font-size: 30px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    justify-content: center;
+}
+.values {
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+}
+.values input {
+    border: 3px solid lightskyblue;
+    border-radius: 5px;
+    padding: 5px 10px;
+    width: 150px;
+}
+.counter {
+    width: 350px;
+    border: 3px solid lightskyblue;
+    border-radius: 7px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    align-items: stretch;
+}
+.display {
+    border: 3px solid lightskyblue;
+    border-radius: 7px;
+    padding: 20px;
+    font-size: 45px;
+    color: lightskyblue;
+    font-weight: 700;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.number {
+    color: lightskyblue;
+}
+.red {
+    color: red;
+}
+.controls {
+    border: 3px solid lightskyblue;
+    border-radius: 7px;
+
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.controls button {
+    padding: 7px 12px;
+    font-size: 25px;
+    background-color: lightskyblue;
+    color: #555;
+    outline: none;
+    border: none;
+    border-radius: 7px;
+    font-weight: 700;
+}
+.controls button:active {
+    transform: scale(.9);
+}
+.disabledTrue {
+    opacity: .5;
+}
+.controls button:active.disabledTrue {
+    transform: none;
 }
