@@ -1,5 +1,3 @@
-import {Dispatch} from 'redux';
-
 export type Counter2StateType=typeof initialState2
 const initialState2={
     maxValue: 5,
@@ -56,24 +54,4 @@ export const counter1Reducer=(state: Counter2StateType=initialState2, action: Co
             return state
     }
 
-}
-
-//thunk
-export const setValuesToLSTC=(startValue: number, maxValue: number)=>(dispatch: Dispatch)=>{
-    dispatch(setActiveSettingsDisplayAC(false))
-    localStorage.setItem('startValue', JSON.stringify(startValue))
-    localStorage.setItem('maxValue', JSON.stringify(maxValue))
-}
-export const getStartValueFromLSTC=()=>(dispatch: Dispatch)=>{
-    let startValueLS = localStorage.getItem('startValue')
-    if (startValueLS) {
-        dispatch(setStartValueAC(JSON.parse(startValueLS)))
-    }
-}
-export const getMaxValueFromLSTC=()=>(dispatch: Dispatch)=>{
-    let maxValueLS=localStorage.getItem('maxValue')
-
-    if (maxValueLS){
-        dispatch(setMaxValueAC(JSON.parse(maxValueLS)))
-    }
 }

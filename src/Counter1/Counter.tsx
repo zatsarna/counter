@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import Button from '../components/Button';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../bll/store';
-import {getStartValueFromLSTC, resetAC, setNumberAC, setStartValueAC, setWarningAC} from '../bll/counter-reducer1';
+import { resetAC, setNumberAC, setWarningAC} from '../bll/counter-reducer1';
 
 type CounterPropsType = {
     maxValue: number
@@ -18,21 +18,14 @@ const Counter = (props: CounterPropsType) => {
         if (props.activeSettingsDisplay){
             dispatch(setNumberAC(props.startValue))
         }
-
         if (props.startValue < props.maxValue){
             dispatch(setWarningAC("Enter values and press 'set'"))
         }
         if (props.startValue > props.maxValue || props.startValue <0 || props.maxValue <1 || props.startValue===props.maxValue){
             dispatch(setWarningAC("Incorrect value"))
         }
-
     },[props.startValue, props.maxValue, props.activeSettingsDisplay])
 
-    useEffect(()=>{
-     // @ts-ignore
-        dispatch(getStartValueFromLSTC())
-
-    },[])
     function incHandler() {
         if (number<props.maxValue){
             dispatch(setNumberAC(number+1))

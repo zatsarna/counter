@@ -4,11 +4,10 @@ import Counter from './Counter';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../bll/store';
 import {
-    getMaxValueFromLSTC,
-    getStartValueFromLSTC,
+
     setActiveSettingsDisplayAC,
     setMaxValueAC,
-    setStartValueAC, setValuesToLSTC
+    setStartValueAC
 } from '../bll/counter-reducer1';
 
 const Counter1Settings = () => {
@@ -25,18 +24,9 @@ const Counter1Settings = () => {
         dispatch(setActiveSettingsDisplayAC(true))
         dispatch(setStartValueAC(Number(event.currentTarget.value)))
     }
-    useEffect(()=>{
-
-        // @ts-ignore
-        dispatch(getStartValueFromLSTC())
-        // @ts-ignore
-        dispatch(getMaxValueFromLSTC())
-
-    },[])
 
     function setValuesHandler() {
-        // @ts-ignore
-        dispatch(setValuesToLSTC(startValue,maxValue))
+        dispatch(setActiveSettingsDisplayAC(false))
     }
 
     return (
