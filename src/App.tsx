@@ -9,9 +9,9 @@ function App() {
 
     return (
         <div className="App">
-           {/* <LocalStorage/>*/}
-            {/*<Counter1Settings/>*/}
-            <Counter2/>
+          {/*  <LocalStorage/>*/}
+            <Counter1Settings/>
+            {/*<Counter2/>*/}
 
         </div>
     );

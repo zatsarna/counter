@@ -1,5 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Button from '../components/Button';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppRootStateType} from '../bll/store';
+import {getStartValueFromLSTC, resetAC, setNumberAC, setStartValueAC, setWarningAC} from '../bll/counter-reducer1';
 
 type CounterPropsType = {
     maxValue: number
@@ -7,37 +10,36 @@ type CounterPropsType = {
     activeSettingsDisplay: boolean
 }
 const Counter = (props: CounterPropsType) => {
-
-const [number, setNumber]=useState<number>(props.startValue)
-    const [warning, setWarning]=useState< string>("")
+    const dispatch=useDispatch()
+    const number=useSelector<AppRootStateType, number>(state => state.counter1.number)
+    const warning=useSelector<AppRootStateType, string>(state => state.counter1.warning)
 
     useEffect(()=>{
         if (props.activeSettingsDisplay){
-            setNumber(props.startValue)
+            dispatch(setNumberAC(props.startValue))
         }
 
         if (props.startValue < props.maxValue){
-            setWarning("Enter values and press 'set'")
+            dispatch(setWarningAC("Enter values and press 'set'"))
         }
         if (props.startValue > props.maxValue || props.startValue <0 || props.maxValue <1 || props.startValue===props.maxValue){
-            setWarning("Incorrect value")
+            dispatch(setWarningAC("Incorrect value"))
         }
 
     },[props.startValue, props.maxValue, props.activeSettingsDisplay])
+
     useEffect(()=>{
-        let startValueLS = localStorage.getItem('startValue')
-        if (startValueLS) {
-            setNumber(JSON.parse(startValueLS))
-        }
+     // @ts-ignore
+        dispatch(getStartValueFromLSTC())
 
     },[])
     function incHandler() {
         if (number<props.maxValue){
-            setNumber(number+1)
+            dispatch(setNumberAC(number+1))
         }
     }
     function resetHandler() {
-        setNumber(props.startValue)
+        dispatch(resetAC())
     }
     return (
             <div className={'counter'}>

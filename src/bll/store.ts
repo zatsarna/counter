@@ -1,9 +1,12 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
-import {counter2Reducer} from './counter-reducer';
+
 import thunk from 'redux-thunk';
+import {counter2Reducer} from './counter-reducer2';
+import {counter1Reducer} from './counter-reducer1';
 
 const rootReducer=combineReducers({
-    counter: counter2Reducer
+    counter: counter2Reducer,
+    counter1: counter1Reducer
 })
 export type AppRootStateType=ReturnType<typeof rootReducer>
 export const store=createStore(rootReducer, applyMiddleware(thunk))

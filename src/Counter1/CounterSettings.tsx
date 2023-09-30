@@ -1,37 +1,42 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import Button from '../components/Button';
 import Counter from './Counter';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppRootStateType} from '../bll/store';
+import {
+    getMaxValueFromLSTC,
+    getStartValueFromLSTC,
+    setActiveSettingsDisplayAC,
+    setMaxValueAC,
+    setStartValueAC, setValuesToLSTC
+} from '../bll/counter-reducer1';
 
 const Counter1Settings = () => {
-    const [maxValue, setMaxValue]=useState(5)
-    const [startValue, setStartValue]=useState(0)
-   /* const [warning, setWarning]=useState< string>("")*/
-    const [activeSettingsDisplay, setActiveSettingsDisplay]=useState<boolean>(false)
+    const dispatch=useDispatch()
+    const maxValue=useSelector<AppRootStateType, number>(state => state.counter1.maxValue)
+    const startValue=useSelector<AppRootStateType, number>(state => state.counter1.startValue)
+    const activeSettingsDisplay=useSelector<AppRootStateType, boolean>(state => state.counter1.activeSettingsDisplay)
 
     function changeMaxValue(event: ChangeEvent<HTMLInputElement>) {
-        setActiveSettingsDisplay(true)
-        setMaxValue(Number(event.currentTarget.value))
+        dispatch(setActiveSettingsDisplayAC(true))
+        dispatch(setMaxValueAC(Number(event.currentTarget.value)))
     }
     function changeStartValue(event: ChangeEvent<HTMLInputElement>) {
-        setActiveSettingsDisplay(true)
-        setStartValue(Number(event.currentTarget.value))
+        dispatch(setActiveSettingsDisplayAC(true))
+        dispatch(setStartValueAC(Number(event.currentTarget.value)))
     }
     useEffect(()=>{
-        let startValueLS=localStorage.getItem('startValue')
-        let maxValueLS=localStorage.getItem('maxValue')
-        if (startValueLS){
-            setStartValue(JSON.parse(startValueLS))
-        }
-        if (maxValueLS){
-            setMaxValue(JSON.parse(maxValueLS))
-        }
+
+        // @ts-ignore
+        dispatch(getStartValueFromLSTC())
+        // @ts-ignore
+        dispatch(getMaxValueFromLSTC())
 
     },[])
 
     function setValuesHandler() {
-        setActiveSettingsDisplay(false)
-        localStorage.setItem('startValue', JSON.stringify(startValue))
-        localStorage.setItem('maxValue', JSON.stringify(maxValue))
+        // @ts-ignore
+        dispatch(setValuesToLSTC(startValue,maxValue))
     }
 
     return (

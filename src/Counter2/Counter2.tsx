@@ -9,7 +9,7 @@ import {
     setMaxValueAC,
     setNumberAC,
     setStartValueAC, setValuesToLSTC
-} from '../bll/counter-reducer';
+} from '../bll/counter-reducer2';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../bll/store';
 
