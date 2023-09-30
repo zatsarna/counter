@@ -1,51 +1,53 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import Button from '../components/Button';
 import s from './Counter2.module.css'
+import {
+    getValuesFromLSTC,
+    increaseAC,
+    resetAC,
+    setActiveSettingsDisplayAC,
+    setMaxValueAC,
+    setNumberAC,
+    setStartValueAC, setValuesToLSTC
+} from '../bll/counter-reducer';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppRootStateType} from '../bll/store';
 
 const Counter2 = () => {
-    const [maxValue, setMaxValue] = useState(5)
-    const [startValue, setStartValue] = useState(0)
-    const [activeSettingsDisplay, setActiveSettingsDisplay] = useState<boolean>(false)
-    const [number, setNumber] = useState<number>(startValue)
+    const dispatch=useDispatch()
+    const number=useSelector<AppRootStateType, number>(state => state.counter.number)
+    const maxValue=useSelector<AppRootStateType, number>(state => state.counter.maxValue)
+    const startValue=useSelector<AppRootStateType, number>(state => state.counter.startValue)
+    const activeSettingsDisplay=useSelector<AppRootStateType, boolean>(state => state.counter.activeSettingsDisplay)
 
     useEffect(() => {
         if (activeSettingsDisplay) {
-            setNumber(startValue)
+            dispatch(setNumberAC(startValue))
         }
     }, [startValue, maxValue,activeSettingsDisplay])
 
     function incHandler() {
-        if (number < maxValue) {
-            setNumber(number + 1)
-        }
+        dispatch(increaseAC())
     }
     function resetHandler() {
-        setNumber(startValue)
+        dispatch(resetAC())
     }
     function changeMaxValue(event: ChangeEvent<HTMLInputElement>) {
-        setActiveSettingsDisplay(true)
-        setMaxValue(Number(event.currentTarget.value))
+        dispatch(setActiveSettingsDisplayAC(true))
+        dispatch(setMaxValueAC(Number(event.currentTarget.value)))
     }
     function changeStartValue(event: ChangeEvent<HTMLInputElement>) {
-        setActiveSettingsDisplay(true)
-        setStartValue(Number(event.currentTarget.value))
+        dispatch(setActiveSettingsDisplayAC(true))
+        dispatch(setStartValueAC(Number(event.currentTarget.value)))
     }
     useEffect(() => {
-        let startValueLS2 = localStorage.getItem('startValue2')
-        let maxValueLS2 = localStorage.getItem('maxValue2')
-        if (startValueLS2) {
-            setStartValue(JSON.parse(startValueLS2))
-            setNumber(JSON.parse(startValueLS2))
-        }
-        if (maxValueLS2) {
-            setMaxValue(JSON.parse(maxValueLS2))
-        }
+        // @ts-ignore
+        dispatch(getValuesFromLSTC())
 
     }, [])
     function setValuesHandler() {
-        setActiveSettingsDisplay(!activeSettingsDisplay)
-        localStorage.setItem('startValue2', JSON.stringify(startValue))
-        localStorage.setItem('maxValue2', JSON.stringify(maxValue))
+        // @ts-ignore
+        dispatch(setValuesToLSTC(activeSettingsDisplay,startValue, maxValue))
     }
 
     return (
